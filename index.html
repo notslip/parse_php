@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        table{
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+
+    </style>
+</head>
+<body>
+<form id="filter">
+    <span>Показать товары, у которых </span>
+    <select id="price">
+        <option value="cost_rub">Розничная цена</option>
+        <option value="cost_wholesale">Оптовая цена</option>
+    </select>
+    <span> от </span>
+    <input id="min_price" type="number">
+    <span> до </span>
+    <input id="max_price" type="number">
+    <span> рублей на складе </span>
+    <select id="quantity">
+        <option value=">">Более</option>
+        <option value="<">Менее</option>
+    </select>
+    <input id="number_quantity" type="number">
+    <span> штук </span>
+    <button type="submit"> Показать товары</button>
+</form>
+<h1>Таблица</h1>
+<table>
+</table>
+<div id="result"></div>
+
+</body>
+<script src="client/index.js"></script>
+</html>
+
+
