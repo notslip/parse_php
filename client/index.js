@@ -11,7 +11,14 @@ async function checkData() {
             let event = new Event("check", {bubbles: true});
             document.dispatchEvent(event);
         }
-        else {document.querySelector('table').innerHTML = `<h1>идет парсинг таблицы, обновите страницу через минуту</h1>`;}
+        else {
+            document.querySelector('table').innerHTML = `<h1>идет парсинг таблицы, обновите страницу через минуту</h1>`;
+            await fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json;charset=utf-8'},
+                body: JSON.stringify({run:1})
+            });
+        }
     } else {alert("Ошибка HTTP: " + response.status);}
 }
 async function getData(d) {

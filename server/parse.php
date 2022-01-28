@@ -16,15 +16,15 @@ use \PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 
 class Parse
 {
-    private $file;
-    private $sheet;
-    private $highestColumn;
-    private $highestRow;
-    private $highestColumnIndex;
-    private $arrTitle;
-    private $arrData;
+    private string $file;
+    private object $sheet;
+    private string $highestColumn;
+    private int $highestRow;
+    private int $highestColumnIndex;
+    private array $arrTitle;
+    private array $arrData;
 
-    function __construct($filepath){
+    function __construct(string $filepath){
         $this->file = $filepath;
         $this->sheet = IOFactory::load($this->file)->getActiveSheet();
         $this->highestColumn = $this->sheet->getHighestColumn();
@@ -34,7 +34,7 @@ class Parse
         $this->arrData = [];
     }
 
-    function name_col(){
+    function name_col():array{
         for ($col = 1; $col <= $this->highestColumnIndex; ++$col) {
             $value = $this->sheet->getCellByColumnAndRow($col, 1)->getValue();
             if ($value != "") {
@@ -44,7 +44,7 @@ class Parse
         return $this->arrTitle;
     }
 
-    function get_Data(){
+    function get_Data():array{
         $this->arrTitle = $this->name_col();
         for ($row = 2; $row <= $this->highestRow; ++$row) {
             $arrTemp=[];
