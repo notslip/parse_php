@@ -35,6 +35,7 @@ class Parse
     }
 
     function name_col():array{
+    //    creates array contains names for title columns
         for ($col = 1; $col <= $this->highestColumnIndex; ++$col) {
             $value = $this->sheet->getCellByColumnAndRow($col, 1)->getValue();
             if ($value != "") {
@@ -45,15 +46,12 @@ class Parse
     }
 
     function get_Data():array{
+//        creates array contains data, for example: [number row =>[title column => value data]]
         $this->arrTitle = $this->name_col();
         for ($row = 2; $row <= $this->highestRow; ++$row) {
             $arrTemp=[];
             for ($col = 1; $col <= $this->highestColumnIndex; ++$col) {
                 $value = $this->sheet->getCellByColumnAndRow($col, $row)->getValue();
-//                echo $value."\n";
-//                echo mb_detect_encoding($value)." - ".$row."-".$col."\n";
-//                $value=mb_convert_encoding($value,'UTF-8');
-//                echo mb_detect_encoding($value)." - ".$row."-".$col."\n";
                 if(mb_strtolower($value) == "стоимость"){
                     unset($arrTemp);
                     break;

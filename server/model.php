@@ -40,23 +40,25 @@ function cooksql($request){
 function getdbData($request){
     $temp=cooksql($request);
     try{
-        $conn = connect_db();
-
-        $stmt = $conn->prepare($temp[0]);
-        for($i=1, $s=count($temp[1]); $i<=$s; $i++){
-            $stmt->bindParam($i,$temp[1][$i-1], PDO::PARAM_INT);
-        }
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        if ($result == false){
-            return $stmt->errorInfo();
-        }
-        else{
-            return $result;
-        }
+        $db = new DB("price","root",
+            "mysqlpass", "mysql",
+            "localhost", "utf8");
+        $result = $db->run(...$temp)->fetchAll();
+        return $result;
     }
     catch (PDOException $e){
         echo "fail ".$e->getMessage();
+    }
+}
+
+function checkTable(){
+    try {
+        $db = new DB("price","root", "mysqlpass", "mysql", "localhost", "utf8");
+        $db->run("DESCRIBE price_product");
+        return true;
+    }
+    catch (Exception $e){
+        return false;
     }
 }
 

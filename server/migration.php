@@ -26,11 +26,8 @@ function create_db($name){
 }
 
 
-function create_table($names_col=""){
-    //забью пока запрос вручную
-    //надо будет сделать автоматическое определение типов
+function create_table(){
     try{
-        $conn = connect_db();
         $sql = "CREATE TABLE price_product(id INT AUTO_INCREMENT PRIMARY KEY, 
         name_product VARCHAR(100), 
         cost_rub DECIMAL(9,2),
@@ -39,7 +36,10 @@ function create_table($names_col=""){
         quantity_stock_2 INT,
         source_country VARCHAR(20)
         )";
-        $conn->exec($sql);
+        $db = new DB("price","root",
+            "mysqlpass", "mysql",
+            "localhost", "utf8");
+        $db->run($sql);
     }
     catch (PDOException $e){
         echo "Connection failed: " . $e->getMessage();
@@ -61,39 +61,17 @@ function save_data($arr){
     $sql = rtrim($sql, ", ") . ");";
     //подключаемся к бд
     try {
-        $conn = connect_db();
+        $db = new DB("price","root",
+            "mysqlpass", "mysql",
+            "localhost", "utf8");
         foreach ($arr as $arr_val) {
-            $arr_val=array_values($arr_val);
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(1, $arr_val[0], PDO::PARAM_STR);
-            $stmt->bindParam(2, $arr_val[1], PDO::PARAM_STR);
-            $stmt->bindParam(3, $arr_val[2],PDO::PARAM_STR);
-            $stmt->bindParam(4, $arr_val[3],PDO::PARAM_INT);
-            $stmt->bindParam(5, $arr_val[4],PDO::PARAM_INT);
-            $stmt->bindParam(6, $arr_val[5],PDO::PARAM_STR);
-            $rowsNumber = $stmt->execute();
-            if ($rowsNumber == false){
-                var_dump($stmt->errorInfo());
-            }
+            $db->run($sql,array_values($arr_val));
         }
     }
     catch ( PDOException $e){
         echo "fail: ". $e->getMessage();
     }
 
-}
-
-function checkTable(){
-    try {
-        $conn = connect_db();
-        $sql = "DESCRIBE price_product";
-        $stmt=$conn->prepare($sql);
-        $stmt->execute();
-        return true;
-    }
-    catch (Exception $e){
-        return false;
-    }
 }
 
 function createData(){

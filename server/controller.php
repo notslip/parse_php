@@ -9,12 +9,12 @@ mb_http_output('UTF-8');
 mb_http_input('UTF-8');
 
 //$req  = [
-//    "run"=>1,
-////      "request"=>["price"=>"cost_wholesale",
-////                  "min_price"=>"10",
-////                  "max_price"=>"30000",
-////                  "quantity"=>"<",
-////                  "number_quantity"=>"20"]
+////    "run"=>1,
+//      "request"=>["price"=>"cost_wholesale",
+//                  "min_price"=>"10",
+//                  "max_price"=>"30000",
+//                  "quantity"=>"<",
+//                  "number_quantity"=>"20"]
 //];
 
 
