@@ -9,6 +9,9 @@ mb_http_output('UTF-8');
 mb_http_input('UTF-8');
 
 function create_db($name){
+    /**
+     * создание БД
+     */
     try {
         // подключаемся к серверу
         $db = new PDO(
@@ -27,6 +30,9 @@ function create_db($name){
 
 
 function create_table(){
+    /**
+     * создание таблицы
+     */
     try{
         $sql = "CREATE TABLE price_product(id INT AUTO_INCREMENT PRIMARY KEY, 
         name_product VARCHAR(100), 
@@ -47,7 +53,9 @@ function create_table(){
 }
 
 function save_data($arr){
-    //готовим sql запрос
+    /**
+     *  сохрание в БД спаршеных данных из таблицы
+     */
     $arr_name_col = $arr[1];
     $arr_name_col = rename_key($arr_name_col, "en");
     $sql = "INSERT INTO price_product (";
@@ -75,6 +83,11 @@ function save_data($arr){
 }
 
 function createData(){
+    /**
+     *  создает таблицу
+     *  запускает парсинг xls файла
+     *  сохраняет данные в таблицу
+     */
     create_table();
     $parser = new Parse("pricelist.xls");
     save_data($parser->get_Data());

@@ -8,6 +8,9 @@ mb_http_input('UTF-8');
 
 
 function cooksql($request){
+    /**
+     * подготовка sql запроса из request
+     */
     $sqlarr=array();
     if ($request["price"] =="cost_wholesale" || $request["price"] == "cost_rub"){
         $sql = "SELECT * FROM price_product WHERE ".$request["price"]." ";
@@ -38,6 +41,9 @@ function cooksql($request){
 }
 
 function getdbData($request){
+    /**
+     * получение данных по запоросу request
+     */
     $temp=cooksql($request);
     try{
         $db = new DB("price","root",
@@ -52,6 +58,9 @@ function getdbData($request){
 }
 
 function checkTable(){
+    /**
+     * проверка на присутсвие готовой таблицы
+     */
     try {
         $db = new DB("price","root", "mysqlpass", "mysql", "localhost", "utf8");
         $db->run("DESCRIBE price_product");

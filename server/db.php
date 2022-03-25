@@ -3,6 +3,7 @@
 class DB extends PDO {
     /**
      * wrapper over PDO set atributes and castomise call connection
+     * обертка над PDO с установленными аттрибутами и дополнительными функциями
      */
         function __construct(string $dbname, string $username, string $password, string $driver="mysql", string $host="localhost",string $charset="utf8")
         {
@@ -13,17 +14,19 @@ class DB extends PDO {
             $this->setAttribute(PDO::ATTR_EMULATE_PREPARES, TRUE);
         }
         public function run(string $sql, array $args=[]): PDOStatement
-    /**
-     *combined preparation and execution of a query with an optional array for value substitution
-     */
-    {
-        if (!$args)
         {
-            return $this->query($sql);
+        /**
+         * combined preparation and execution of a query with an optional array for value substitution
+         * выпонение запроса sql, если запрос без дополнительных аргументов, то выполняется просто query запрос
+         */
+
+            if (!$args)
+            {
+                return $this->query($sql);
+            }
+            $stmt = $this->prepare($sql);
+            $stmt->execute($args);
+            return $stmt;
         }
-        $stmt = $this->prepare($sql);
-        $stmt->execute($args);
-        return $stmt;
-    }
 }
 

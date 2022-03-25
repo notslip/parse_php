@@ -20,6 +20,10 @@ mb_http_input('UTF-8');
 
 
 class Controller{
+    /**
+     * @var array
+     *  контроллер который принимает декодированый json и отдает готовый JSON на клиент
+     */
     private array $request;
     function __construct(array $req)
     {
@@ -27,6 +31,9 @@ class Controller{
     }
     function checkData(): array
     {
+        /**
+         * проверяет есть ли данные в таблице
+         */
         if (!checkTable()){
             return array("check"=>"false");
         }
@@ -36,6 +43,9 @@ class Controller{
     }
     function getResult(array $data): array
     {
+        /**
+         *  подсчет результаов по таблице
+         */
         $result=[];
         $sum = 0;
         $max_cost = 0;
@@ -74,6 +84,11 @@ class Controller{
     }
     function getData(array $data): array
     {
+        /**
+         * обрабатывает данные пришедшие из БД, если ничего не найдено то отправляется заглушки
+         * если данные есть то в data записываются данные в result подсчеты по таблице
+         * а title русифицированые загоовки
+         */
         $json_data=array();
         try {
             if($data[0]=="00000"){
@@ -109,6 +124,9 @@ class Controller{
     }
     function routing(): void
     {
+        /**
+         *  выбор функции
+         */
         switch (array_key_first($this->request))
         {
             case 'request':

@@ -15,6 +15,9 @@ use \PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 
 
 class Parse
+/**
+ *  class for parsing xlxs files
+ */
 {
     private string $file;
     private object $sheet;
@@ -35,7 +38,9 @@ class Parse
     }
 
     function name_col():array{
-    //    creates array contains names for title columns
+    /**
+     * creates array contains names for title columns
+     */
         for ($col = 1; $col <= $this->highestColumnIndex; ++$col) {
             $value = $this->sheet->getCellByColumnAndRow($col, 1)->getValue();
             if ($value != "") {
@@ -46,7 +51,9 @@ class Parse
     }
 
     function get_Data():array{
-//        creates array contains data, for example: [number row =>[title column => value data]]
+    /**
+     * creates array contains data, for example: [number row =>[title column => value data]]
+     */
         $this->arrTitle = $this->name_col();
         for ($row = 2; $row <= $this->highestRow; ++$row) {
             $arrTemp=[];
